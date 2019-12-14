@@ -85,11 +85,13 @@ try:
         deadline = time.time() + 3
         while time.time() < deadline:
             try:
-                my_socket.mysend(random.choice(MSGS))
                 time.sleep(0.5)
+                my_socket.mysend(random.choice(MSGS))
             except socket.timeout:
                 logger.error('socket timeout error on send')
                 break
+            except BrokenPipeError:
+                continue
     elif action == 'receive':
         my_socket.sock.bind(('127.0.0.1', port))
         my_socket.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
