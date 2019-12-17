@@ -8,13 +8,13 @@ Demo of fixed length socket IPC (Inter Proces Comunication)
 1. First start server console
 
 ```sh
-$ fixed_length_message_client_server.py 5005 receive
+$ ./fixed_length_message_client_server.py 5005 receive
 
 ```
 
 2. then start client on client console:
 ```sh
-$ fixed_length_message_client_server.py 5005 send   
+$ ./fixed_length_message_client_server.py 5005 send   
 2019-12-14 20:56:20,353 - Sending completed
 2019-12-14 20:56:20,854 - Sending completed
 2019-12-14 20:56:21,355 - Sending completed

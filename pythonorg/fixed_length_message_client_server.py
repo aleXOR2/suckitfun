@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 My interpretation of https://docs.python.org/3/howto/sockets.html
 """
@@ -9,7 +11,7 @@ import random
 import logging
 
 
-MSGS = [
+MSGS = [ # padding = .
       'When we two parted; In silence and tears, Half broken-hearted To sever for years...............',
       'Pale grew thy cheek and cold, Colder thy kiss; Truly that hour foretold Sorrow to this.........',
       'The dew of the morning Sank chill on my brow - It felt like the warning Of what I feel now.....',
@@ -50,13 +52,14 @@ class MySocket:
             sent = self.sock.send(msg[totalsent:])
             if sent == 0:
                 raise RuntimeError("nothing has been sent")
+            logger.info('Chunk with length %dB sent' % sent)
             totalsent = totalsent + sent
-        logger.info('Sending completed')
+        logger.info('Sending completed: %dB sent' % totalsent)
 
     def myreceive(self):
         chunks = []
         bytes_recd = 0
-        conn, addr = my_socket.sock.accept()
+        conn, addr = my_socket.sock.accept() # blocking action
         logger.info('Connected by %s:%d' % (addr))
         with conn:
             while bytes_recd < MSGLEN:
@@ -94,7 +97,7 @@ try:
                 continue
     elif action == 'receive':
         my_socket.sock.bind(('127.0.0.1', port))
-        my_socket.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        my_socket.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) #  overriding port TIME_WAIT state
         my_socket.sock.listen()
         while True:
             try:
