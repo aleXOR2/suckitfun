@@ -52,6 +52,7 @@ def service_connection(key, mask):
         if data.outb:
             print("sending", repr(data.outb), "to connection with fd", sock_fd_no)
             sent = sock.send(data.outb)  # Should be ready to write
+            # import pdb; pdb.set_trace()
             data.outb = data.outb[sent:]
 
 
